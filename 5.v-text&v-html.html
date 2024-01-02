@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
 <body>
     <div id="app">
-        {{msg}}
+        <div v-text="msg"></div>
+        <div v-text="msg1"></div>
+        <div v-html="msg1"></div>
     </div>
 
 
@@ -19,9 +19,9 @@
             el: '#app',//前缀的写法是根据不同选择器：id：#x；class：.X
             data: {
                 msg: 'Hello world!',
+                msg1:'<h1>hhhh</h1>'
             }
         })
     </script>
 </body>
-
 </html>

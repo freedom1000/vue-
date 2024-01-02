@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #div1{
+            width: 200px;
+            height: 200px;
+            background: #ff0;
+        }
+        #div2{
+            width: 50px;
+            height: 50px;
+            background: #00f;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-on:click==@click -->
+        <button @click.once="add(2,$event)">add</button>
+        <input type="text" @keyup="sum($event)" v-model="num">
+        <h1>{{count}}</h1>
+
+        <div id="div1" @click="clickDiv1">
+            <div id="div2" @click.stop="clickDiv2"></div>
+        </div>
+    </div>
+
+
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',//前缀的写法是根据不同选择器：id：#x；class：.X
+            data: {
+                msg: 'Hello world!',
+                count:0,
+                num:0
+            },
+            methods:{
+                add(n,e){
+                    this.count+=n;
+                    console.log(e)
+                },
+                sum(e){
+                    // console.log(e.keyCode);
+                    if(e.keyCode==13){
+                        this.count+=parseInt(this.num) 
+                    }
+                },
+                clickDiv1(){
+                    console.log('div1')
+                },
+                clickDiv2(e){
+                    console.log('div2')
+                    // e.stopPropagation()
+                }
+            }
+            
+        })
+    </script>
+</body>
+
+</html>

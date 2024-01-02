@@ -17,6 +17,8 @@
             <li v-for="(student,index) in stuSort">
                 <span>学生姓名：{{student.name}}</span>
                 <span>学生年龄：{{student.age}}</span>
+                <span>{{index}}</span>
+                <button @click="showName(student)">showName</button>
             </li>
         </ul>
         <ul>
@@ -55,7 +57,12 @@
                     console.log(this);
                     return this.stuList.sort((a,b)=>{
                         return a.age-b.age
-                    })
+                    });
+                }
+            },
+            methods:{
+                showName(item){
+                    console.log(item.age,item.name)
                 }
             }
         })
