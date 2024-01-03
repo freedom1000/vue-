@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .red{
+            background: #e91818;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <img v-bind:src="imgUrl" alt="">
+        <button @click="toogle">toogle</button>
+        <h1 :class="{red:isRed}">微创</h1>
+        <h1 :style="styleObj">VUE</h1>
+        <h1 :class="[isRed?'red':'']">aaa</h1>
+        <!-- 简写v-bind=: -->
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                imgUrl:'https://v2.cn.vuejs.org/images/logo.svg',
+                clsName:'red',
+                isRed:true,
+                styleObj:{
+                    background:'#f0f',
+                    color:'#0f0',
+                }
+            },
+            methods:{
+                toogle(){
+                    this.isRed=!this.isRed
+                }
+            }
+        })
+    </script>
+</body>
+</html>
