@@ -9,12 +9,34 @@
         .red{
             background: #ff0000;
         }
+        .add-form{
+            margin:20px 0;
+        }
     </style>
 </head>
 <body>
     <div id="app" class="text-center">
         <h1>todolist</h1>
         <hr>
+        <form class="form-inline" @submit.prevent>
+            <div class="form-group">
+              <label for="product-name"></label>
+              <input v-model.trim="keyword" type="text" class="form-control" placeholder="请输入商品名称">
+            </div>
+            <button @click="search" type="submit" class="btn btn-default glyphicon glyphicon-search">搜索</button>
+          </form>
+        
+        <form class="form-inline add-form" @submit.prevent>
+            <div class="form-group">
+              <label for="product-name">商品名称</label>
+              <input v-model.trim="productName" type="text" class="form-control" id="exampleInputName2" placeholder="请输入商品名称">
+            </div>
+            <div class="form-group">
+              <label for="product-price">商品价格</label>
+              <input v-model.number="productPrice" type="number" class="form-control" id="product-price" placeholder="商品价格">
+            </div>
+            <button @click="add" type="submit" class="btn btn-default glyphicon glyphicon-plus-sign">增加</button>
+          </form>
         <table class="table table-bordered">
             <thead>
                 <tr class="warning"
@@ -29,18 +51,18 @@
             <tbody>
                 <tr @click="select(product)" v-for="(product, index) in productList" :class="product.isRed?'red':''">
                     <td>
-                        <input type="checkbox">
+                        <input @click.stop type="checkbox" v-model="checkedList" :value="index"><!-- 在动态属性里，index是可变的，在value前加：表示动态属性 -->
                     </td>
                     <td>{{product.productName}}</td>
                     <td>{{product.productPrice}}</td>
                     <td>
-                        <button type="button" class="btn btn-warning glyphicon glyphicon-remove btn-xs"></button>
+                        <button @click="del(index)" type="button" class="btn btn-warning glyphicon glyphicon-remove btn-xs"></button>
                     </td>
                 </tr>
                 <tr>
-                    <td><button type="button" class="btn btn-danger btn-xs">删除选中</button></td>
+                    <td><button @click="delChecked" type="button" class="btn btn-danger btn-xs">删除选中</button></td>
                     <td colspan="3">
-                        总价是:0元
+                        总价是:{{total}}元
                     </td>
                 </tr>
             </tbody>
@@ -62,7 +84,7 @@
                     productPrice:155,
                     isRed:false
                 },{
-                    productName:'衣服鞋子',
+                    productName:'鞋子',
                     productPrice:235,
                     isRed:false
                 },{
@@ -70,10 +92,63 @@
                     productPrice:223,
                     isRed:false
                 }],
+                checkedList:[],
+                productName:'',
+                productPrice:0,
+                keyword:'',
             },
             methods:{
                 select(product){
                     product.isRed=!product.isRed;
+                    this.total+product.productPrice
+                    
+                },
+                del(index){
+                    this.productList.splice(index,1)
+                },
+                delChecked(){
+                    this.productList = this.productList.filter((elem,index)=>{
+                        if(!this.checkedList.includes(index)){
+                            return elem;
+                        }
+                    })
+                    this.checkedList=[];
+                },
+                // filter:遍历的方法，过滤出符合条件的结果，形成一个新的数组
+                add(){
+                    this.productList.push({
+                        productName:this.productName,
+                        productPrice:this.productPrice,
+                        isRed:false
+                    })
+                    this.productName='';
+                    this.productPrice=0
+                },
+                search(){
+                    this.productList=this.productList.filter(function(elem,index){
+                        if(elem.productName.includes(this.keyword)){
+                            return elem;
+                        }
+                    }.bind(this));
+                }
+            },
+            computed:{//计算属性
+                total(){
+                    // let sum = 0;
+                    // this.productList.forEach((elem,index)=>{
+                    //     if(elem.isRed){
+                    //         sum+=elem.productPrice
+                    //     }
+                    // });
+                    // return sum;
+
+
+                    return this.productList.reduce((sum,elem)=>{
+                        if(elem.isRed){
+                            sum+=parseInt(elem.productPrice);
+                        }
+                        return sum;
+                    },0);
                 }
             }
         })
