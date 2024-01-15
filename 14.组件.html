@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <weichuang></weichuang>
+
+
+        <todoList productname="衣服" productprice="177"></todoList>
+        <todoList productname="裤子" productprice="145"></todoList>
+        <todoList productname="鞋子" productprice="5600"></todoList>
+        <todoList productname="手机" productprice="8900"></todoList>
+    </div>
+
+
+    <script src="vue.js"></script>
+    <script>
+        Vue.component('weichuang',{
+            template:`
+                <div>
+                    <h1>微创网讯</h1>
+                    <h1>微创</h1>
+                </div>
+            `
+        });
+
+        Vue.component('todoList',{
+            data(){
+                return{
+
+                };
+            },
+            methods(){
+
+            },
+            template:
+            `<li>
+               <span>{{productname}}</span> 
+               <span>{{productprice}}</span> 
+
+            </li>`,
+            props:['productname','productprice']
+        })
+
+
+        let vm = new Vue({
+            el: '#app',//前缀的写法是根据不同选择器：id：#x；class：.X
+            data: {
+                msg: 'Hello world!',
+            }
+        })
+    </script>
+</body>
+</html>
