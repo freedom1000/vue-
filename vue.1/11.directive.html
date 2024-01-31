@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .div1{
+            height: 200px;
+            width: 200px;
+            background: #be1616;
+        }
+    </style>
+</head>
+<body>
+    <!-- 自定义指令 -->
+    <div id="app">
+        <div v-weichuang='bg'>blue</div>
+        <h1 v-weichuang='bg2'>you</h1>
+        <div class="div1" v-drag></div>
+    </div>
+
+
+    <script src="vue.js"></script>
+    <script>
+        Vue.directive('weichuang',(el,binding,vNode)=>{
+            // console.log(el)
+            // console.log(inding)
+            // console.log(vNode)
+            el.style.background=binding.value;
+        })
+        Vue.directive('drag',(el,binding,vNode)=>{
+            el.style.position='absolute';
+            el.onmousedown=function(e){
+                let xDis=e.clientX-el.offsetLeft;
+                let yDis=e.clientY-el.offsetTop;
+                document.onmousemove=function(e){
+                    el.style.left=e.clientX-xDis+'px';
+                    el.style.top=e.clientY-yDis+'px';
+                }
+                el.onmouseup=function(){
+                    document.onmousemove=null
+                }
+            }
+        })
+        let vm = new Vue({
+            el: '#app',//前缀的写法是根据不同选择器：id：#x；class：.X
+            data: {
+                bg:'#ff0',
+                bg2:'#0f0',
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        v-for指令是用来遍历 数组、对象以及整数的
+        v-for最常用的可能就是用来遍历数组，接受两个参数（item, index），item为遍历出的每组数据，
+        index为每组数据的索引，可做唯一标识
+
+        v-for遍历对象可接受三个参数（value, key, index），value为每个对象的value值，key为key值，
+        index为索引
+
+
+    -->
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in arr"> <!-- 循环数组arr-->
+                {{item}} {{index}}
+                <!-- 变量，插值的方式 -->
+            </li>
+            
+        </ul>
+        <ul>
+            <li v-for="(student,index) in stuSort">
+                <!-- 循环列表stuList -->
+                <span>学生姓名：{{student.name}}</span>
+                <!-- 对象.属性 -->
+                <span>学生年龄：{{student.age}}</span>
+                <span>{{index}}</span>
+                <button @click="showName(student)">showName</button>
+                <!-- v-on:click==@click student是实参，传到methods里（）-->
+            </li>
+        </ul>
+        <ul>
+            <li v-for="(value,key) in dog">
+                <!-- 循环对象dog -->
+                {{value}} {{key}}
+            </li>
+            
+        </ul>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app',//挂载元素
+            data:{
+                arr:['html','css','js','vue'],//循环数组
+                stuList:[//循环列表
+                    {
+                        name:'ls',
+                        age:29,
+                    },{
+                        name:'zs',
+                        age:25,
+                    },{
+                        name:'we',
+                        age:34,
+                    }
+                ],
+                dog:{//对象
+                    name:'pp',
+                    age:3,
+                    color:'red'
+                }
+            },
+            computed:{//计算属性
+                stuSort(){//这个表达也等于stuSort：function（）{}，但是对象里面的方法不能写成箭头函数计算属性必须是一个新的名，不能和循环列表的名字一样
+                    console.log(this);
+                    return this.stuList.sort((a,b)=>{//this:当前对象
+                        return a.age-b.age//年龄排序
+                    });
+                }
+            },
+            methods:{
+                showName(item){
+                    console.log(item.age,item.name)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

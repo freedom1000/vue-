@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 第一次调用 登录的功能 -->
+        <comp1>
+            <span slot="title">登录</span>
+            <div slot="content">
+                用户名：<input type="text">
+                密码:<input type="password">
+            </div>
+            
+        </comp1>
+        <!-- 第二次调用 注册的功能 -->
+        <comp1>
+            <span slot="title">注册</span>
+            <div slot="content">
+                密码:<input type="password">
+                邮箱：<input type="email">
+                手机号：<input type="text">
+            </div>
+            
+        </comp1>
+    </div>
+    <!-- 具名插槽 -->
+     <template id="temp1"> <!--定义一个新的组件-->
+        <div>
+            <h1>
+                <slot name="title"></slot>
+            </h1>
+            <form action="">
+                <slot name="content"></slot><!-- 插槽 占位 --> 
+            </form>
+        </div> 
+    </template>
+
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            components:{
+                comp1:{//组件名：comp1
+                    template:'#temp1'
+                }
+            }
+        })
+    </script>
+</body>
+</html>
