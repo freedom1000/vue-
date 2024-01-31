@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>todolist</title>
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!-- 从Btrap里面引入表格样式 -->
     <style>
         .red{
             background: #ff0000;
@@ -27,6 +28,7 @@
           </form>
         
         <form class="form-inline add-form" @submit.prevent>
+            <!-- @submit.prevent阻止默认行为 -->
             <div class="form-group">
               <label for="product-name">商品名称</label>
               <input v-model.trim="productName" type="text" class="form-control" id="exampleInputName2" placeholder="请输入商品名称">
@@ -37,19 +39,18 @@
             </div>
             <button @click="add" type="submit" class="btn btn-default glyphicon glyphicon-plus-sign">增加</button>
           </form>
-        <table class="table table-bordered">
-            <thead>
-                <tr class="warning"
-                >
-                    <td>选择</td>
+       <table class="table table-bordered">  <!--从Btrap里面引入表格样式 -->
+            <thead><!-- 头 -->
+                <tr class="warning"><!-- 每列 -->
+                    <td>选择</td><!-- 每行 -->
                     <td>商品名称</td>
                     <td>商品价格</td>
                     <td>删除</td> 
                 </tr>
-                
             </thead>
-            <tbody>
+            <tbody><!-- 身体 -->
                 <tr @click="select(product)" v-for="(product, index) in productList" :class="product.isRed?'red':''">
+                    <!--product实参 每一行进行点击时 isred 判断是否点击到该商品，y则显示红色 绑定一个点击事件@click-->
                     <td>
                         <input @click.stop type="checkbox" v-model="checkedList" :value="index"><!-- 在动态属性里，index是可变的，在value前加：表示动态属性 -->
                     </td>
@@ -61,7 +62,7 @@
                 </tr>
                 <tr>
                     <td><button @click="delChecked" type="button" class="btn btn-danger btn-xs">删除选中</button></td>
-                    <td colspan="3">
+                    <td colspan="3"><!-- 跨三列 colspan="3"-->
                         总价是:{{total}}元
                     </td>
                 </tr>
@@ -78,7 +79,7 @@
                 productList:[{
                     productName:'衣服',
                     productPrice:222,
-                    isRed:false
+                    isRed:false//保证能够在点击该行是不会和其他行绑定同时点击
                 },{
                     productName:'裤子',
                     productPrice:155,
@@ -98,17 +99,19 @@
                 keyword:'',
             },
             methods:{
-                select(product){
+                select(product){//product形参 每一行进行点击时
                     product.isRed=!product.isRed;
                     this.total+product.productPrice
                     
                 },
                 del(index){
                     this.productList.splice(index,1)
+                    // splice（）：删除元素，并向数组添加新元素 第一个是删除的位置 第二个是删除的数量
                 },
                 delChecked(){
                     this.productList = this.productList.filter((elem,index)=>{
                         if(!this.checkedList.includes(index)){
+                            // arr.includes()数组是否包含给定的值，与字符串的includes方法类似
                             return elem;
                         }
                     })
@@ -117,6 +120,7 @@
                 // filter:遍历的方法，过滤出符合条件的结果，形成一个新的数组
                 add(){
                     this.productList.push({
+                        // push 增加对象 推一个
                         productName:this.productName,
                         productPrice:this.productPrice,
                         isRed:false
@@ -132,6 +136,12 @@
                     }.bind(this));
                 }
             },
+            // 数组遍历：
+            // forEach（）：没有返回值，只是正对每个元素调用func
+            // map（）：返回一个新的Array，每个元素为调用func在结果
+            // filter（）：返回一个符合func条件的元素数组
+            // some（）：返回一个boolean，判断是否有元素符合func条件
+            // every（）：返回一个boolean，判断每个元素是否符合func条件
             computed:{//计算属性
                 total(){
                     // let sum = 0;
@@ -144,6 +154,7 @@
 
 
                     return this.productList.reduce((sum,elem)=>{
+                        // reduce：求和 有两个参数 第一个参数是方法 第二个是初始值，在哪个在基础上求和
                         if(elem.isRed){
                             sum+=parseInt(elem.productPrice);
                         }
