@@ -6,18 +6,29 @@
     <title>Document</title>
 </head>
 <body>
+    <!-- 生命周期就是一堆钩子函数 -->
     <div id="app">
-        {{msg}}
+        
     </div>
 
 
     <script src="vue.js"></script>
     <script>
-        let vm = new Vue({
-            el: '#app',//前缀的写法是根据不同选择器：id：#x；class：.X
-            data: {
-                msg: 'Hello world!',
-            }
+        new Vue({
+            el: '#app',
+            beforeCreate(){
+                console.log('beforeCreate');
+            },
+            created(){
+                confirm.log('created')
+            },
+            beforeMount () {
+                console.log('beforeMount')
+            },
+            mounted(){
+                console.log('mounted')
+            },
+            
         })
     </script>
 </body>

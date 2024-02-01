@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+
+    </div>
+
+    <script src="vue.js"></script>
+
+    <script>
+        let data={
+            productList:[{
+                    productName:'衣服',
+                    productPrice:222,
+                    isRed:false//保证能够在点击该行是不会和其他行绑定同时点击
+                },{
+                    productName:'裤子',
+                    productPrice:155,
+                    isRed:false
+                },{
+                    productName:'鞋子',
+                    productPrice:235,
+                    isRed:false
+                },{
+                    productName:'手机',
+                    productPrice:223,
+                    isRed:false,
+                }],
+                checkedList:[],
+                productName:'',
+                productPrice:0,
+                keyword:'',
+        };
+
+        Obiect.keys(data).forEach((key)=>{
+            define(data,key,data[key]);
+        })
+        //Object.defineProperty(obj,prop,descriptor)方法会直接在一个对象上定义一个新属性，
+            //或者修改一个对象的现有属性，并返回这个对象
+            //obj:要在其上定义属性的对象
+            //prop：要定义或修改的属性名称
+            //descriptor:将被定义或修改的属性描述符
+            //Object.defineProperty();方法的作用是监听到每个属性
+        function define(data,key,val){
+            Object.defineProperty(data,key,{
+                get(){
+                    console.log('获取')
+                    return val;
+                },
+                set(newVal){
+                    console.log('设置','旧值是${val}','旧值是${newVal}')
+                    val=newVal;
+                },
+            });
+        }
+        console.log(data.productName)
+        data.productName='裤子';
+        // Object.keys():方法会返回一个由一个给定对象的自身可枚举属性组成的数组，
+        //数组中属性名的排列顺序和使用for...in循环遍历该对象时返回的顺序一致
+
+        // console.log(Object.keys(data));
+        // Object.defineProperty();// 方法 对每个属性进行监听
+    </script>
+</body>
+</html>
