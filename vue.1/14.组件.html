@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div id="app">
-        <weichuang></weichuang>
+        <weichuang></weichuang><!-- 调用组件内地内容，可以多次调用  -->
+        <!-- 定义一个新的组件相当于定义一个新的标签 -->
 
-
-        <todoList productname="衣服" productprice="177"></todoList>
-        <todoList productname="裤子" productprice="145"></todoList>
-        <todoList productname="鞋子" productprice="5600"></todoList>
-        <todoList productname="手机" productprice="8900"></todoList>
+        <!-- 组件传值，在组件里定义一个名字例如：productname，将值传到组件里 -->
+        <!-- 通过v-for循环productList -->
+        
+        <todoList @click.native="select(item)" v-for="(item,index) in productList :key=" index" :productname="item.productName" :productprice="item.productPrice"></todoList>
+        <!-- 点击事件如果想调用根元素时，要加一个.native修饰符 -->
     </div>
 
 
     <script src="vue.js"></script>
     <script>
-        Vue.component('weichuang',{
-            template:`
+        //Vue.component（）{}定义一个新的组件，跨号里面写名字，后面还有一个对象{}，
+        // template模板：一个字符串模板作为vue实例的标识使用。模板将会替换挂载的元素。
+        // 挂载的元素的内容都将被忽略，除非模板的内容有分发插槽
+        Vue.component('weichuang', {
+            template: `
                 <div>
                     <h1>微创网讯</h1>
                     <h1>微创</h1>
@@ -28,31 +34,53 @@
             `
         });
 
-        Vue.component('todoList',{
-            data(){
-                return{
+        Vue.component('todoList', {
+            data() {//data是一个函数 不能是一个对象
+                return {
 
                 };
             },
-            methods(){
+            methods() {
 
             },
             template:
-            `<li>
+                // 接受传过来的productname的值
+                `<li>
                <span>{{productname}}</span> 
                <span>{{productprice}}</span> 
 
             </li>`,
-            props:['productname','productprice']
+            props: ['productname', 'productprice']
+            // Vue组件通过一个props属性来声明一个自己的属性，然后父组件就可以往里面传递数据
         })
 
 
         let vm = new Vue({
             el: '#app',//前缀的写法是根据不同选择器：id：#x；class：.X
             data: {
-                msg: 'Hello world!',
+                productList: [
+                    {
+                        productName: '裤子',
+                        productPrice: 155,
+                        isRed: false
+                    }, {
+                        productName: '鞋子',
+                        productPrice: 235,
+                        isRed: false
+                    }, {
+                        productName: '手机',
+                        productPrice: 223,
+                        isRed: false
+                    }
+                ]
+            },
+            methods:{
+                select(item){
+                    console.log(item.productName)
+                }
             }
         })
     </script>
 </body>
+
 </html>

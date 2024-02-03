@@ -3,32 +3,8 @@
 </template>
 <script>
 export default {
-   name: '',
-   components: {
-     
-   },
-   mixins: [],
-   props: {
-     
-   },
-   data() {
-     return {
-       
-     }
-   },
-   computed: {
-     
-   },
-   watch: {
-     
-   },
-   mounted() {
-     
-   },
-   methods: {
-     
-   }
 };
 </script>
 <style lang='' scoped>
+/* scoped表示定义的样式只在这个组件里面起作用 */
 </style>

@@ -40,6 +40,7 @@
         .dialog-title-close{
             float: right;
             cursor: pointer;
+            /* 小手 */
         }
     </style>
 </head>
@@ -49,6 +50,7 @@
         <button @click="isRegist=true">注册</button>
         <!-- 登录 -->
         <mydialog v-show="isLogin" @close="isLogin=false">
+            <!-- 频繁切换v-show，只切换一次v-if -->
             <span slot="title">登录</span>
             <form action="" slot="content">
                 <p>
@@ -109,8 +111,8 @@
         new Vue({
             el: '#app',
             data:{
-                isLogin:false,
-                isRegist:false
+                isLogin:false,//初始值不显示
+                isRegist:false//初始值不显示
             },
             components:{
                 mydialog:{//组件名
