@@ -1,14 +1,14 @@
 <template>
   <div id="app">
     <CommonHeader :selectMenu="selectMenu"></CommonHeader>
-    <router-view  class="content"/>
-    <CommonFooter @changeTitle="changeTitle" :menuList="menuList"></CommonFooter>
+    <router-view  class="content" @switchTab="switchTab"/>
+    <CommonFooter :footerBgcolor="selectMenu.bgcolor" :menuList="menuList"></CommonFooter>
     <!-- 接受子组件传过来的值 -->
   </div>
 </template>
 
 <script>
-import Commonheader from './components/CommonHeader.vue';
+import CommonHeader from './components/CommonHeader.vue';
 import CommonFooter from './components/CommonFooter.vue';
 
 export default {
@@ -17,9 +17,14 @@ export default {
     CommonFooter,
   },
   methods: {
-    changeTitle(menu) {
-      this.selectMenu = Menu;
+    switchTab(menuName) {
+      this.menuList.forEach(menu => {
+        if (menu.name === menuName) {
+          this.selectMenu = menu;
+        }
+      });
     },
+
   },
   data() {
     return {
@@ -47,6 +52,7 @@ export default {
         },
       ],
       selectMenu: {}, // 当前选中的菜单
+      footerBgcolor: '', // footer的背景颜色
     };
   },
 };

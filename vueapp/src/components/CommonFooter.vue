@@ -1,5 +1,5 @@
 <template>
-         <ul class="fotter" :style="{background: bgColor}">
+         <ul class="fotter" :style="{background: footerBgcolor}">
             <li style="{background: menu.bgColor;}" class="footer-menu" v-for="(menu,index)
             in menuList" :key="index"></li>
             <router-link  @click.native="selectMenu(menu)" :to="menu.path">{{ menu.title }}
@@ -12,14 +12,18 @@ export default {
   data() {
     return {
       bgColor: '',
+      // footerBgcolor: ''
     };
   },
-  props: ['menuList'], // 父组件传值到子组件用props
+  props: ['menuList', 'footerBgcolor'], // 父组件传值到子组件用props
   methods: {
-    selectMenu() {
-      this.bgColor = menu.bgColor;
-      this.$emit('changeTitle', menu); // 子组件给父组件传值用$emit
-    },
+    
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log(to);
+  },
+  created() {
+    console.log("footer");
   },
 };
 </script>
